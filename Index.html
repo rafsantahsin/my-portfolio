@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MD. Rafshan Tashin - Graduate Engineer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #111827; /* Dark Slate Gray - very dark blue-gray */
+            color: #D1D5DB; /* Lighter Gray for text */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .section-title {
+            @apply text-3xl sm:text-4xl font-bold text-center mb-12 sm:mb-16 text-teal-400 tracking-tight;
+        }
+        .card {
+            @apply bg-gray-800 p-6 sm:p-8 rounded-xl shadow-2xl border border-gray-700 hover:border-teal-500/70 transition-all duration-300 ease-in-out;
+        }
+        .tag {
+            @apply bg-teal-600/80 text-teal-100 text-xs font-medium mr-2 mb-2 px-3 py-1 rounded-full whitespace-nowrap;
+        }
+        nav div > a { /* Targeting desktop nav links specifically for active state styling */
+            @apply px-3 py-2 text-gray-300 hover:text-teal-400 transition-colors duration-200 rounded-md text-sm font-medium;
+        }
+        nav div > a.active { /* This class will be added by JS to desktop nav links */
+            @apply text-teal-400 bg-gray-700/50;
+        }
+        /* Styling for mobile menu links, including active state */
+        #mobile-menu a {
+            @apply block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-teal-400;
+        }
+        #mobile-menu a.active {
+             @apply bg-gray-700 text-teal-400;
+        }
+
+        .hero-gradient {
+            background: radial-gradient(ellipse at top, #1E3A8A 20%, #111827 70%); /* Dark blue to dark slate gradient */
+        }
+        .timeline-item::before {
+            content: '';
+            /*
+            The dot is w-4 (1rem). Its radius is 0.5rem.
+            The timeline container has pl-6 (1.5rem) or md:pl-8 (2rem).
+            The line is 2px wide. Its center is 1px from its start.
+            We want the dot's center on the line's center.
+            Dot's left edge = -(container_padding) + (line_center_offset) - (dot_radius)
+            Small: left = -1.5rem + 1px - 0.5rem = calc(-2rem + 1px)
+            Medium: left = -2rem + 1px - 0.5rem = calc(-2.5rem + 1px)
+            */
+            left: calc(-2rem + 1px); /* Adjusted for precise alignment */
+            @apply absolute top-1/2 -translate-y-1/2 w-4 h-4 bg-teal-500 rounded-full border-4 border-gray-800;
+            z-index: 1;
+        }
+        @media (min-width: 768px) { /* md breakpoint */
+            .timeline-item::before {
+                left: calc(-2.5rem + 1px); /* Adjusted for precise alignment */
+            }
+        }
+
+        .btn {
+            @apply py-3 px-6 rounded-lg font-semibold shadow-md hover:shadow-lg transition-all duration-300 ease-in-out inline-flex items-center justify-center;
+        }
+        .btn-primary {
+            @apply bg-teal-500 hover:bg-teal-600 text-white;
+        }
+        .btn-secondary {
+            @apply border border-teal-500 text-teal-300 hover:bg-teal-500 hover:text-white;
+        }
+
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #111827;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #374151;
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #4B5563;
+        }
+    </style>
+</head>
+<body class="leading-relaxed">
+    <nav class="bg-gray-900/70 backdrop-blur-lg sticky top-0 z-50 shadow-xl">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <a href="#" class="text-2xl font-bold text-teal-400">
+                        R<span class="text-gray-300">T</span>
+                    </a>
+                </div>
+                <div class="hidden md:flex space-x-1"> <a href="#about">About</a>
+                    <a href="#education">Education</a>
+                    <a href="#experience">Experience</a>
+                    <a href="#skills">Skills</a>
+                    <a href="#projects">Projects</a>
+                    <a href="#contact">Contact</a>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button id="menu-btn" type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-teal-500" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <svg id="menu-icon-open" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg id="menu-icon-close" class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mobile-menu" class="hidden md:hidden bg-gray-800/95">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#about">About</a>
+                <a href="#education">Education</a>
+                <a href="#experience">Experience</a>
+                <a href="#skills">Skills</a>
+                <a href="#projects">Projects</a>
+                <a href="#contact">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <header class="min-h-screen flex items-center justify-center hero-gradient text-center px-4 sm:px-6 py-20 sm:py-24">
+        <div class="max-w-3xl mx-auto">
+            <img 
+                src="image.png" alt="MD. Rafshan Tashin - Profile Picture" 
+                class="w-32 h-32 sm:w-40 sm:h-40 mx-auto rounded-full shadow-2xl border-4 border-teal-500/70 mb-6 sm:mb-8 object-cover"
+                onerror="this.onerror=null; this.src='https://placehold.co/160x160/4A5568/FFFFFF?text=Image+Not+Found&font=inter';" >
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white mb-3 sm:mb-4 tracking-tight">
+                MD. Rafshan Tashin
+            </h1>
+            <p class="text-lg sm:text-xl text-teal-300 mb-8 sm:mb-10">
+                Graduate Engineer | Materials Science & Engineering
+            </p>
+            <div class="space-y-3 sm:space-y-0 sm:space-x-4">
+                <a href="mailto:mrafshan.tashin@gmail.com" class="btn btn-primary w-full sm:w-auto">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884zM18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" /></svg>
+                    Email Me
+                </a>
+                <a href="https://linkedin.com/in/rafshan-tashin" target="_blank" rel="noopener noreferrer" class="btn btn-secondary w-full sm:w-auto">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    LinkedIn
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <section id="about" class="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-gray-800/50">
+        <div class="container mx-auto max-w-3xl">
+            <h2 class="section-title">About Me</h2>
+            <p class="text-base sm:text-lg text-gray-300 leading-relaxed text-center hyphens-auto">
+                Enthusiastic and detail-oriented Materials Science and Engineering graduate from Khulna University of Engineering & Technology (KUET), equipped with practical exposure in manufacturing, quality control, and logistics operations. Proficient in CAD tools, data interpretation, and process documentation. Demonstrates strong teamwork, time management, and communication skills. Eager to contribute in an engineering, supply chain, or logistics role with a strong desire to learn, grow, and support operational excellence.
+            </p>
+        </div>
+    </section>
+
+    <section id="education" class="py-16 sm:py-24 px-4 sm:px-6 lg:px-8">
+        <div class="container mx-auto max-w-5xl">
+            <h2 class="section-title">Education</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                <div class="card">
+                    <h3 class="text-xl font-semibold text-teal-400 mb-2">BSc in Materials Science and Engineering</h3>
+                    <p class="text-gray-400 mb-1">Khulna University of Engineering & Technology (KUET)</p>
+                    <p class="text-gray-500 text-sm mb-2">January 2019 - June 2023</p>
+                    <p class="text-gray-300">CGPA: 2.90 <span class="text-xs text-gray-400">(Exams completed April 2024 due to COVID-19 rescheduling)</span></p>
+                    <p class="text-gray-400 mt-3 text-sm"><strong>Relevant Courses:</strong> Materials Processing, Quality Control, Manufacturing Technology, Logistics Engineering</p>
+                </div>
+                <div class="card">
+                    <h3 class="text-xl font-semibold text-teal-400 mb-2">Higher Secondary Certificate (HSC)</h3>
+                    <p class="text-gray-400 mb-1">Bangladesh Nou-Bahini College, Khulna</p>
+                    <p class="text-gray-500 text-sm mb-2">June 2016 - July 2018</p>
+                    <p class="text-gray-300">GPA: 5.00 out of 5.00</p>
+                    <p class="text-teal-300 mt-3 text-sm font-medium">Board Scholarship Recipient</p>
+                </div>
+                <div class="card">
+                    <h3 class="text-xl font-semibold text-teal-400 mb-2">Secondary School Certificate (SSC)</h3>
+                    <p class="text-gray-400 mb-1">Bangladesh Nou-Bahini College, Khulna</p>
+                    <p class="text-gray-500 text-sm mb-2">January 2014 - April 2016</p>
+                    <p class="text-gray-300">GPA: 5.00 out of 5.00</p>
+                    <p class="text-teal-300 mt-3 text-sm font-medium">Board Scholarship Recipient</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience" class="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-gray-800/50">
+        <div class="container mx-auto max-w-4xl"> <h2 class="section-title">Experience</h2>
+            <div class="space-y-16">
+                <div>
+                    <h3 class="text-2xl sm:text-3xl font-semibold text-teal-300 mb-8 text-center">Internships & Industrial Training</h3>
+                    <div class="relative border-l-2 border-gray-700 pl-6 md:pl-8 space-y-10">
+                        <div class="relative timeline-item">
+                            <div class="card p-6">
+                                <p class="text-xs text-gray-400 mb-1">2023 | Kushtia, Bangladesh</p>
+                                <h4 class="text-xl font-semibold text-white mb-1">BRB Cable Industries Limited</h4>
+                                <ul class="list-disc list-inside text-gray-300 space-y-1 mt-2 text-sm sm:text-base">
+                                    <li>Assisted in cable production and testing.</li>
+                                    <li>Supported process optimization, improving QA by 10%.</li>
+                                    <li>Ensured compliance with ISO and safety standards.</li>
+                                </ul>
+                            </div>
+                        </div>
+                         <div class="relative timeline-item">
+                             <div class="card p-6">
+                                <p class="text-xs text-gray-400 mb-1">2022 | Khulna, Bangladesh</p>
+                                <h4 class="text-xl font-semibold text-white mb-1">Khulna Shipyard Limited</h4>
+                                <ul class="list-disc list-inside text-gray-300 space-y-1 mt-2 text-sm sm:text-base">
+                                    <li>Observed steel structure assembly in shipbuilding.</li>
+                                    <li>Documented workflows and material assessments.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="relative timeline-item">
+                             <div class="card p-6">
+                                <p class="text-xs text-gray-400 mb-1">2021 | Chattogram, Bangladesh</p>
+                                <h4 class="text-xl font-semibold text-white mb-1">BSRM Steel Re-Rolling Mills</h4>
+                                <ul class="list-disc list-inside text-gray-300 space-y-1 mt-2 text-sm sm:text-base">
+                                    <li>Participated in rod manufacturing and quality inspections.</li>
+                                    <li>Supported adherence to SOP, GMP, and standards.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-2xl sm:text-3xl font-semibold text-teal-300 mb-8 text-center">Part-Time Experience</h3>
+                     <div class="relative border-l-2 border-gray-700 pl-6 md:pl-8">
+                        <div class="relative timeline-item">
+                            <div class="card p-6">
+                                <p class="text-xs text-gray-400 mb-1">Jan 2020 - Nov 2023 | Remote</p>
+                                <h4 class="text-xl font-semibold text-white mb-1">Content Editor & Writer</h4>
+                                <p class="text-gray-400 mb-2 text-sm">Lipikar Agency of Content Writing</p>
+                                <ul class="list-disc list-inside text-gray-300 space-y-1 text-sm sm:text-base">
+                                    <li>Led content team, edited technical materials, ensured on-time delivery.</li>
+                                    <li>Improved article engagement by 30% and workflow efficiency by 20%.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="skills" class="py-16 sm:py-24 px-4 sm:px-6 lg:px-8">
+        <div class="container mx-auto max-w-5xl">
+            <h2 class="section-title">Core Competencies</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                <div class="card">
+                    <div class="flex items-center mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-teal-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
+                        <h3 class="text-xl font-semibold text-teal-400">Engineering & Software</h3>
+                    </div>
+                    <div class="flex flex-wrap">
+                        <span class="tag">SolidWorks</span><span class="tag">Fusion 360</span><span class="tag">Engineering Drawing</span><span class="tag">Python</span><span class="tag">C++</span><span class="tag">Product Testing</span><span class="tag">QA</span><span class="tag">3D Simulation</span>
+                    </div>
+                </div>
+                <div class="card">
+                     <div class="flex items-center mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-teal-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" /></svg>
+                        <h3 class="text-xl font-semibold text-teal-400">Operations & Logistics</h3>
+                    </div>
+                     <div class="flex flex-wrap">
+                        <span class="tag">Process Documentation</span><span class="tag">Technical Report Writing</span><span class="tag">Time Management</span><span class="tag">Team Coordination</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="flex items-center mb-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 text-teal-400 mr-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>
+                        <h3 class="text-xl font-semibold text-teal-400">Data & Analysis</h3>
+                    </div>
+                    <div class="flex flex-wrap">
+                        <span class="tag">Statistical Quality Control</span><span class="tag">Supply Chain Insight</span><span class="tag">Logistics Insight</span><span class="tag">Data Collection</span><span class="tag">Data Interpretation</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-gray-800/50">
+        <div class="container mx-auto max-w-3xl">
+            <h2 class="section-title">Research & Projects</h2>
+            <div class="card">
+                <h3 class="text-2xl font-semibold text-teal-400 mb-3">Multiscale Investigation of Structural, Electrical, Optical, and Elastic Properties of InCaF3 using DFT</h3>
+                <p class="text-gray-300 leading-relaxed text-sm sm:text-base">
+                    This research focused on advanced simulations and material characterization, employing Density Functional Theory (DFT) to investigate the properties of InCaF3. The project involved in-depth analysis of its structural, electrical, optical, and elastic characteristics at multiple scales.
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <section id="more-info" class="py-16 sm:py-24 px-4 sm:px-6 lg:px-8">
+        <div class="container mx-auto max-w-5xl">
+             <h2 class="section-title">Additional Highlights</h2>
+            <div class="grid md:grid-cols-2 gap-10 sm:gap-12">
+                <div>
+                    <h3 class="text-2xl font-semibold text-teal-400 mb-6 text-center md:text-left">Professional Interests</h3>
+                    <div class="card">
+                        <ul class="list-none space-y-2 text-sm sm:text-base">
+                            <li class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-teal-500 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>Technical problem-solving</li>
+                            <li class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-teal-500 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>Process documentation</li>
+                            <li class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-teal-500 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>Supply chain support</li>
+                            <li class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-teal-500 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>CAD modeling</li>
+                            <li class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-teal-500 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>Field operations</li>
+                            <li class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-teal-500 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>Teamwork in industrial environments</li>
+                            <li class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-teal-500 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>Manufacturing process improvement</li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-semibold text-teal-400 mb-6 text-center md:text-left">Extracurricular Activities</h3>
+                    <div class="space-y-6">
+                        <div class="card">
+                            <h4 class="text-lg font-semibold text-white mb-1">KUET Career Club</h4>
+                            <ul class="list-disc list-inside text-gray-400 text-sm space-y-1">
+                                <li>Member of career development workshops and student engagement events.</li>
+                                <li>Contributed to soft skills and career grooming sessions.</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h4 class="text-lg font-semibold text-white mb-1">TRY KUET</h4>
+                            <ul class="list-disc list-inside text-gray-400 text-sm space-y-1">
+                                <li>Volunteered in blood donation, food relief, and charity drives.</li>
+                                <li>Participated in fundraising and social outreach programs.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-10 sm:gap-12 mt-10 sm:mt-12">
+                <div>
+                    <h3 class="text-2xl font-semibold text-teal-400 mb-6 text-center md:text-left">Certifications</h3>
+                    <div class="card">
+                        <ul class="list-none space-y-2 text-sm sm:text-base">
+                             <li class="flex items-start"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 mt-1 text-teal-500 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723A3.066 3.066 0 0110 17.75a3.066 3.066 0 01-1.988-.723 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745A3.066 3.066 0 016.267 3.455zM8.5 7a.5.5 0 000 1h3a.5.5 0 000-1h-3zM8 9.5A.5.5 0 018.5 9h3a.5.5 0 010 1h-3a.5.5 0 01-.5-.5zm0 2.5a.5.5 0 01.5-.5h3a.5.5 0 010 1h-3a.5.5 0 01-.5-.5z" clip-rule="evenodd" /></svg>Certificate in Supply Chain Management - My Great Learning</li>
+                             <li class="flex items-start"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 mt-1 text-teal-500 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723A3.066 3.066 0 0110 17.75a3.066 3.066 0 01-1.988-.723 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745A3.066 3.066 0 016.267 3.455zM8.5 7a.5.5 0 000 1h3a.5.5 0 000-1h-3zM8 9.5A.5.5 0 018.5 9h3a.5.5 0 010 1h-3a.5.5 0 01-.5-.5zm0 2.5a.5.5 0 01.5-.5h3a.5.5 0 010 1h-3a.5.5 0 01-.5-.5z" clip-rule="evenodd" /></svg>SolidWorks Essentials - Udemy</li>
+                             <li class="flex items-start"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 mt-1 text-teal-500 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723A3.066 3.066 0 0110 17.75a3.066 3.066 0 01-1.988-.723 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745A3.066 3.066 0 016.267 3.455zM8.5 7a.5.5 0 000 1h3a.5.5 0 000-1h-3zM8 9.5A.5.5 0 018.5 9h3a.5.5 0 010 1h-3a.5.5 0 01-.5-.5zm0 2.5a.5.5 0 01.5-.5h3a.5.5 0 010 1h-3a.5.5 0 01-.5-.5z" clip-rule="evenodd" /></svg>Introduction to CAD with Fusion 360 - Autodesk</li>
+                             <li class="flex items-start"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 mt-1 text-teal-500 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723A3.066 3.066 0 0110 17.75a3.066 3.066 0 01-1.988-.723 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745A3.066 3.066 0 016.267 3.455zM8.5 7a.5.5 0 000 1h3a.5.5 0 000-1h-3zM8 9.5A.5.5 0 018.5 9h3a.5.5 0 010 1h-3a.5.5 0 01-.5-.5zm0 2.5a.5.5 0 01.5-.5h3a.5.5 0 010 1h-3a.5.5 0 01-.5-.5z" clip-rule="evenodd" /></svg>Affiliate Marketing - Udemy</li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                     <h3 class="text-2xl font-semibold text-teal-400 mb-6 text-center md:text-left">Languages & Honors</h3>
+                     <div class="card">
+                        <h4 class="text-lg font-semibold text-white mb-2">Languages</h4>
+                        <ul class="list-none space-y-1 mb-4 text-sm sm:text-base">
+                            <li class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-teal-500" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7 2a1 1 0 011 1v1h3a1 1 0 110 2H9.578a18.87 18.87 0 01-1.724 4.78c.29.177.568.374.832.591l.001.002.002.001a7.5 7.5 0 012.305 6.628 1 1 0 11-1.993.144 5.502 5.502 0 00-1.65-4.57.5.5 0 00-.351-.175H7a1 1 0 110-2h.535a.5.5 0 00.447-.276l.003-.005A16.92 16.92 0 009.03 5H8a1 1 0 01-1-1V3a1 1 0 011-1zm3.922 11.945a.5.5 0 00-.944-.09l-1 3A.5.5 0 009.5 17h1a.5.5 0 00.472-.345l1-3a.5.5 0 00-.05-.51zM12.25 10.272L11.5 13h1.428l.75-2.728A.5.5 0 0013.202 10h-.475a.5.5 0 00-.475.272z" clip-rule="evenodd" /></svg>Bangla - Native</li>
+                            <li class="flex items-center"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-teal-500" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M7 2a1 1 0 011 1v1h3a1 1 0 110 2H9.578a18.87 18.87 0 01-1.724 4.78c.29.177.568.374.832.591l.001.002.002.001a7.5 7.5 0 012.305 6.628 1 1 0 11-1.993.144 5.502 5.502 0 00-1.65-4.57.5.5 0 00-.351-.175H7a1 1 0 110-2h.535a.5.5 0 00.447-.276l.003-.005A16.92 16.92 0 009.03 5H8a1 1 0 01-1-1V3a1 1 0 011-1zm3.922 11.945a.5.5 0 00-.944-.09l-1 3A.5.5 0 009.5 17h1a.5.5 0 00.472-.345l1-3a.5.5 0 00-.05-.51zM12.25 10.272L11.5 13h1.428l.75-2.728A.5.5 0 0013.202 10h-.475a.5.5 0 00-.475.272z" clip-rule="evenodd" /></svg>English - Professional Proficiency</li>
+                        </ul>
+                        <h4 class="text-lg font-semibold text-white mb-2">Honors & Awards</h4>
+                        <ul class="list-none space-y-1 text-sm sm:text-base">
+                            <li class="flex items-start"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 mt-1 text-teal-500 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>Technical Education Scholarships in KUET</li>
+                            <li class="flex items-start"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 mt-1 text-teal-500 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>Board Scholarship in HSC</li>
+                            <li class="flex items-start"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 mt-1 text-teal-500 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" /></svg>Board Scholarship in SSC</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-16 sm:py-24 px-4 sm:px-6 lg:px-8 bg-gray-800/50">
+        <div class="container mx-auto max-w-3xl text-center">
+            <h2 class="section-title">Get In Touch</h2>
+            <p class="text-lg text-gray-300 mb-8 sm:mb-10 leading-relaxed">
+                I'm currently seeking opportunities in engineering, supply chain, or logistics. If you have a position that aligns with my skills and aspirations, or if you'd just like to connect, please feel free to reach out!
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-6">
+                <a href="mailto:mrafshan.tashin@gmail.com" class="btn btn-primary w-full sm:w-auto text-base">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884zM18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" /></svg>
+                    mrafshan.tashin@gmail.com
+                </a>
+                <a href="tel:+8801770004604" class="btn btn-secondary w-full sm:w-auto text-base">
+                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path d="M2 3a1 1 0 011-1h2.153a1 1 0 01.986.836l.74 4.435a1 1 0 01-.54 1.06l-1.548.773a11.037 11.037 0 006.105 6.105l.774-1.548a1 1 0 011.059-.54l4.435.74a1 1 0 01.836.986V17a1 1 0 01-1 1h-2C7.82 18 2 12.18 2 5V3z"></path></svg>
+                    +8801770004604
+                </a>
+            </div>
+             <p class="text-gray-400 mt-8 text-sm">Mujgunni Residential Area, Khalishpur, Khulna</p>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-center py-10 sm:py-12 px-4 sm:px-6">
+        <p class="text-gray-400 text-sm">&copy; <span id="currentYear"></span> MD. Rafshan Tashin. All rights reserved.</p>
+        <p class="text-xs text-gray-500 mt-2">Designed with <span class="text-teal-500">Tailwind CSS</span> & <span class="text-red-500">❤</span></p>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIconOpen = document.getElementById('menu-icon-open');
+        const menuIconClose = document.getElementById('menu-icon-close');
+
+        menuBtn.addEventListener('click', () => {
+            const isExpanded = menuBtn.getAttribute('aria-expanded') === 'true' || false;
+            menuBtn.setAttribute('aria-expanded', !isExpanded);
+            mobileMenu.classList.toggle('hidden');
+            menuIconOpen.classList.toggle('hidden');
+            menuIconClose.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when a link is clicked
+        const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+        mobileMenuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menuBtn.setAttribute('aria-expanded', 'false');
+                mobileMenu.classList.add('hidden');
+                menuIconOpen.classList.remove('hidden');
+                menuIconClose.classList.add('hidden');
+            });
+        });
+        
+        // Set current year in footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+        // Active navigation link highlighting on scroll
+        const sections = document.querySelectorAll('section[id]');
+        const navLinksDesktop = document.querySelectorAll('nav .hidden.md\\:flex a'); // Target desktop nav links
+        const navLinksMobile = document.querySelectorAll('#mobile-menu a'); // Target mobile nav links
+
+        function changeNavActiveState() {
+            let currentSectionId = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                // Adjust the offset (e.g., 150 or sectionHeight / 3) as needed for when the link should become active
+                if (pageYOffset >= (sectionTop - 150)) { 
+                    currentSectionId = section.getAttribute('id');
+                }
+            });
+
+            navLinksDesktop.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${currentSectionId}`) {
+                    link.classList.add('active');
+                }
+            });
+             navLinksMobile.forEach(link => { 
+                link.classList.remove('active'); 
+                if (link.getAttribute('href') === `#${currentSectionId}`) {
+                    link.classList.add('active');
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', changeNavActiveState);
+        window.addEventListener('load', changeNavActiveState); // Initial check on load
+
+    </script>
+</body>
+</html>
+
